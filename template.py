@@ -2,7 +2,7 @@ import os  # Importing the os module for operating system related functionality
 from pathlib import Path  # Importing Path class from pathlib module for handling filesystem paths
 
 # Define the name of the project
-project_name = "MLOPs US Visa Approval Prediction"
+project_name = "us_visa_project"
 
 # List of files and directories to be created for the project
 list_of_files = [

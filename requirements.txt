@@ -13,7 +13,7 @@ cycler==0.12.1
 debugpy==1.8.7
 decorator==5.1.1
 dill==0.3.9
-dnspython==2.7.0
+dnspython==1.16.0
 evidently==0.2.8
 exceptiongroup==1.2.2
 executing==2.1.0
@@ -54,7 +54,7 @@ psutil==6.1.0
 pure_eval==0.2.3
 pydantic==1.10.18
 Pygments==2.18.0
-pymongo==4.10.1
+pymongo==3.6.0
 pyparsing==3.2.0
 python-dateutil==2.9.0.post0
 python-multipart==0.0.17
@@ -81,7 +81,7 @@ traitlets==5.14.3
 typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
+-e git+https://github.com/muhammadadilnaeem/MLOPs-US-Visa-Approval-Prediction-Project.git@9043b276e8cb74c91fd7b6c6297ef378b3181682#egg=us_visa_project
 uvicorn==0.32.0
 wcwidth==0.2.13
 xgboost==2.1.2
--e .

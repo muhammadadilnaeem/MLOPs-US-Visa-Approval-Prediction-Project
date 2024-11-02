@@ -18,3 +18,18 @@
 #     a = 1/0
 # except Exception as e:
 #     raise USVISAException(e,sys)
+
+
+# # let's check if MONGODB_URL_KEY is set or not
+# from us_visa_project.constants import MONGODB_URL_KEY
+# print(MONGODB_URL_KEY)
+
+# import os
+# mongo_db_url = os.getenv("MONGODB_URL")
+# print(mongo_db_url)
+
+
+from us_visa_project.pipline.training_pipeline import TrainPipeline
+
+obj = TrainPipeline()
+obj.run_pipeline()

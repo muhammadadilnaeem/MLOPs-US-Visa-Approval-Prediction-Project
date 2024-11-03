@@ -110,3 +110,34 @@ MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
 
 # File name for model config
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join("config", "model.yaml")
+
+
+# AWS 
+
+# Environment variables
+AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"
+
+# AWS Secret Access Key
+AWS_SECRET_ACCESS_KEY_ENV_KEY = "AWS_SECRET_ACCESS_KEY"
+
+# AWS Region
+REGION_NAME = "us-east-1"
+
+"""
+MODEL EVALUATION related constant 
+"""
+
+# Directory name for model evaluation
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+
+# Bucket name for model
+MODEL_BUCKET_NAME = "usvisa-model2024"
+
+# Model registry s3 key
+MODEL_PUSHER_S3_KEY = "model-registry"
+
+# Model registry s3 bucket
+APP_HOST = "0.0.0.0"
+
+# Model registry s3 bucket
+APP_PORT = 8080

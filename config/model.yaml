@@ -1,0 +1,53 @@
+
+# Configuration for GridSearchCV hyperparameter tuning
+grid_search:
+  class: GridSearchCV          # Specifies the class to be used for grid search, here GridSearchCV
+  module: sklearn.model_selection # Module where GridSearchCV is located
+  params:
+    cv: 3                     # Specifies cross-validation folds as 3
+    verbose: 3                # Sets verbosity level for detailed output during search
+
+# Configuration for model selection and hyperparameters for tuning
+model_selection:
+  # First model configuration (K-Nearest Neighbors)
+  module_0:
+    class: KNeighborsClassifier  # Specifies the model class to use (KNeighborsClassifier)
+    module: sklearn.neighbors    # Module where KNeighborsClassifier is located
+    params:
+      algorithm: kd_tree        # Initial algorithm for KNN
+      weights: uniform          # Specifies weight for distance calculation as uniform
+      n_neighbors: 3            # Initial number of neighbors to consider
+    search_param_grid:
+      algorithm:                # List of possible algorithms for neighbor search
+      - auto
+      - ball_tree
+      - kd_tree
+      - brute
+      weights:                  # List of possible weight strategies
+      - uniform
+      - distance
+      n_neighbors:              # List of possible values for the number of neighbors
+      - 3
+      - 5
+      - 9
+
+  # Second model configuration (Random Forest Classifier)
+  module_1:
+    class: RandomForestClassifier # Specifies the model class to use (RandomForestClassifier)
+    module: sklearn.ensemble      # Module where RandomForestClassifier is located
+    params:
+      max_depth: 10               # Initial maximum depth of the tree
+      max_features: sqrt          # Initial setting for max features to consider at each split
+      n_estimators: 3             # Initial number of trees in the forest
+    search_param_grid:
+      max_depth:                  # List of possible values for maximum depth of the tree
+      - 10
+      - 15
+      - 20
+      max_features:               # List of possible values for maximum features to consider
+      - sqrt
+      - log2
+      n_estimators:               # List of possible values for the number of trees
+      - 3
+      - 5
+      - 9

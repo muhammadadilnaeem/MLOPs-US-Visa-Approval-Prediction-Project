@@ -6,7 +6,7 @@ import yaml  # For reading and writing YAML files
 from pandas import DataFrame  # For handling data in DataFrame format
 import numpy as np  # For handling numerical operations with arrays
 
-from us_visa_project.exception import USvisaException  # Custom exception for error handling
+from us_visa_project.exception import USVISAException  # Custom exception for error handling
 from us_visa_project.logger import logging  # Custom logging for tracking execution
 
 # Function to read and parse a YAML file
@@ -18,7 +18,7 @@ def read_yaml_file(file_path: str) -> dict:
 
     # Catch any exceptions, raise a custom USvisaException with system details
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to write data to a YAML file
@@ -34,7 +34,7 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
         with open(file_path, "w") as file:
             yaml.dump(content, file)
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to load a serialized Python object from a file
@@ -51,7 +51,7 @@ def load_object(file_path: str) -> object:
         return obj
 
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to save a numpy array to a file
@@ -68,7 +68,7 @@ def save_numpy_array_data(file_path: str, array: np.array):
         with open(file_path, 'wb') as file_obj:
             np.save(file_obj, array)
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to load a numpy array from a file
@@ -83,7 +83,7 @@ def load_numpy_array_data(file_path: str) -> np.array:
         with open(file_path, 'rb') as file_obj:
             return np.load(file_obj)
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to save a Python object using dill serialization
@@ -99,7 +99,7 @@ def save_object(file_path: str, obj: object) -> None:
         logging.info("Exited the save_object method of utils")
 
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e
 
 
 # Function to drop specified columns from a pandas DataFrame
@@ -119,4 +119,4 @@ def drop_columns(df: DataFrame, cols: list) -> DataFrame:
 
         return df
     except Exception as e:
-        raise USvisaException(e, sys) from e
+        raise USVISAException(e, sys) from e

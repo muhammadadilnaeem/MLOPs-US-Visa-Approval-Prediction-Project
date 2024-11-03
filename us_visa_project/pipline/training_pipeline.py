@@ -6,14 +6,14 @@ from us_visa_project.logger import logging
 from us_visa_project.exception import USVISAException
 from us_visa_project.components.data_ingestion import DataIngestion
 
-from us_visa_project.entity.config_entity import DataIngestionConfig
-from us_visa_project.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
+from us_visa_project.entity.config_entity import DataIngestionConfig, DataValidationConfig ,DataTransformationConfig, ModelTrainerConfig
+from us_visa_project.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact,ModelTrainerArtifact
 
-from us_visa_project.components.data_validation import DataValidation, DataValidationConfig
+from us_visa_project.components.data_validation import DataValidation
 
 
-# from us_visa_project.components.data_transformation import DataTransformation
-# from us_visa_project.components.model_trainer import ModelTrainer
+from us_visa_project.components.data_transformation import DataTransformation
+from us_visa_project.components.model_trainer import ModelTrainer
 # from us_visa_project.components.model_evaluation import ModelEvaluation
 # from us_visa_project.components.model_pusher import ModelPusher
 
@@ -37,8 +37,8 @@ class TrainPipeline:
     #     # Initialize configuration for each component in the pipeline
           self.data_ingestion_config = DataIngestionConfig()
           self.data_validation_config = DataValidationConfig()
-    #     self.data_transformation_config = DataTransformationConfig()
-    #     self.model_trainer_config = ModelTrainerConfig()
+          self.data_transformation_config = DataTransformationConfig()
+          self.model_trainer_config = ModelTrainerConfig()
     #     self.model_evaluation_config = ModelEvaluationConfig()
     #     self.model_pusher_config = ModelPusherConfig()
 
@@ -75,41 +75,41 @@ class TrainPipeline:
         except Exception as e:
             raise USVISAException(e, sys) from e
 
-    # def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact, 
-    #                               data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:
-    #     """
-    #     Starts the data transformation component to prepare data for model training.
+    def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact, 
+                                  data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:
+        """
+        Starts the data transformation component to prepare data for model training.
         
-    #     Output: Returns the artifact containing transformed data.
-    #     """
-    #     try:
-    #         logging.info("Starting data transformation process.")
-    #         data_transformation = DataTransformation(
-    #             data_ingestion_artifact=data_ingestion_artifact,
-    #             data_transformation_config=self.data_transformation_config,
-    #             data_validation_artifact=data_validation_artifact
-    #         )
-    #         data_transformation_artifact = data_transformation.initiate_data_transformation()
-    #         return data_transformation_artifact
-    #     except Exception as e:
-    #         raise USVISAException(e, sys)
+        Output: Returns the artifact containing transformed data.
+        """
+        try:
+            logging.info("Starting data transformation process.")
+            data_transformation = DataTransformation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_transformation_config=self.data_transformation_config,
+                data_validation_artifact=data_validation_artifact
+            )
+            data_transformation_artifact = data_transformation.initiate_data_transformation()
+            return data_transformation_artifact
+        except Exception as e:
+            raise USVISAException(e, sys)
 
-    # def start_model_trainer(self, data_transformation_artifact: DataTransformationArtifact) -> ModelTrainerArtifact:
-    #     """
-    #     Starts the model training component to train a machine learning model.
+    def start_model_trainer(self, data_transformation_artifact: DataTransformationArtifact) -> ModelTrainerArtifact:
+        """
+        Starts the model training component to train a machine learning model.
         
-    #     Output: Returns the artifact containing model details and metrics.
-    #     """
-    #     try:
-    #         logging.info("Starting model training process.")
-    #         model_trainer = ModelTrainer(
-    #             data_transformation_artifact=data_transformation_artifact,
-    #             model_trainer_config=self.model_trainer_config
-    #         )
-    #         model_trainer_artifact = model_trainer.initiate_model_trainer()
-    #         return model_trainer_artifact
-    #     except Exception as e:
-    #         raise USVISAException(e, sys)
+        Output: Returns the artifact containing model details and metrics.
+        """
+        try:
+            logging.info("Starting model training process.")
+            model_trainer = ModelTrainer(
+                data_transformation_artifact=data_transformation_artifact,
+                model_trainer_config=self.model_trainer_config
+            )
+            model_trainer_artifact = model_trainer.initiate_model_trainer()
+            return model_trainer_artifact
+        except Exception as e:
+            raise USVISAException(e, sys)
 
     # def start_model_evaluation(self, data_ingestion_artifact: DataIngestionArtifact, 
     #                            model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
@@ -157,11 +157,13 @@ class TrainPipeline:
             logging.info("Starting the pipeline execution.")
             data_ingestion_artifact = self.start_data_ingestion()
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
-            # data_transformation_artifact = self.start_data_transformation(
-            #     data_ingestion_artifact=data_ingestion_artifact, 
-            #     data_validation_artifact=data_validation_artifact
-            # )
-            # model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            data_transformation_artifact = self.start_data_transformation(
+                data_ingestion_artifact=data_ingestion_artifact, 
+                data_validation_artifact=data_validation_artifact
+            )
+            logging.info("Data transformation completed successfully.")
+            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            logging.info("Model training completed successfully.")
             # model_evaluation_artifact = self.start_model_evaluation(
             #     data_ingestion_artifact=data_ingestion_artifact,
             #     model_trainer_artifact=model_trainer_artifact
@@ -172,7 +174,7 @@ class TrainPipeline:
             #     return None
             
             # self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
-            logging.info("Pipeline execution completed successfully.")
+            # logging.info("Pipeline execution completed successfully.")
 
         except Exception as e:
             raise USVISAException(e, sys)

@@ -7,9 +7,11 @@ from us_visa_project.exception import USVISAException
 from us_visa_project.components.data_ingestion import DataIngestion
 
 from us_visa_project.entity.config_entity import DataIngestionConfig
-from us_visa_project.entity.artifact_entity import DataIngestionArtifact
+from us_visa_project.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 
-# from us_visa_project.components.data_validation import DataValidation
+from us_visa_project.components.data_validation import DataValidation, DataValidationConfig
+
+
 # from us_visa_project.components.data_transformation import DataTransformation
 # from us_visa_project.components.model_trainer import ModelTrainer
 # from us_visa_project.components.model_evaluation import ModelEvaluation
@@ -34,7 +36,7 @@ class TrainPipeline:
     def __init__(self):
     #     # Initialize configuration for each component in the pipeline
           self.data_ingestion_config = DataIngestionConfig()
-    #     self.data_validation_config = DataValidationConfig()
+          self.data_validation_config = DataValidationConfig()
     #     self.data_transformation_config = DataTransformationConfig()
     #     self.model_trainer_config = ModelTrainerConfig()
     #     self.model_evaluation_config = ModelEvaluationConfig()
@@ -55,23 +57,23 @@ class TrainPipeline:
         except Exception as e:
             raise USVISAException(e, sys) from e
 
-    # def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact) -> DataValidationArtifact:
-    #     """
-    #     Starts the data validation component to ensure data quality.
+    def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact) -> DataValidationArtifact:
+        """
+        Starts the data validation component to ensure data quality.
         
-    #     Output: Returns the artifact confirming data validation results.
-    #     """
-    #     try:
-    #         logging.info("Starting data validation process.")
-    #         data_validation = DataValidation(
-    #             data_ingestion_artifact=data_ingestion_artifact,
-    #             data_validation_config=self.data_validation_config
-    #         )
-    #         data_validation_artifact = data_validation.initiate_data_validation()
-    #         logging.info("Data validation completed.")
-    #         return data_validation_artifact
-    #     except Exception as e:
-    #         raise USVISAException(e, sys) from e
+        Output: Returns the artifact confirming data validation results.
+        """
+        try:
+            logging.info("Starting data validation process.")
+            data_validation = DataValidation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_validation_config=self.data_validation_config
+            )
+            data_validation_artifact = data_validation.initiate_data_validation()
+            logging.info("Data validation completed.")
+            return data_validation_artifact
+        except Exception as e:
+            raise USVISAException(e, sys) from e
 
     # def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact, 
     #                               data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:
@@ -154,7 +156,7 @@ class TrainPipeline:
         try:
             logging.info("Starting the pipeline execution.")
             data_ingestion_artifact = self.start_data_ingestion()
-            # data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             # data_transformation_artifact = self.start_data_transformation(
             #     data_ingestion_artifact=data_ingestion_artifact, 
             #     data_validation_artifact=data_validation_artifact

@@ -1,0 +1,62 @@
+
+ # Define the structure of the dataset including data types for each column
+columns:
+  - case_id: category  # Unique identifier for each case, treated as a categorical variable
+  - continent: category  # Continent where the employment case is located, categorical
+  - education_of_employee: category  # Education level of the employee, categorical
+  - has_job_experience: category  # Indicates if the employee has prior job experience, categorical
+  - requires_job_training: category  # Indicates if the job requires training, categorical
+  - no_of_employees: int  # Number of employees in the company, integer type
+  - yr_of_estab: int  # Year the company was established, integer type
+  - region_of_employment: category  # Specific region of employment, categorical
+  - prevailing_wage: int  # Wage offered for the job, integer type
+  - unit_of_wage: category  # Unit of measurement for the wage (e.g., hourly, annually), categorical
+  - full_time_position: category  # Indicates if the position is full-time, categorical
+  - case_status: category  # Current status of the case (e.g., approved, denied), categorical
+
+# List of numerical columns used for quantitative analysis
+numerical_columns:
+  - no_of_employees  # Number of employees, used for numerical calculations
+  - prevailing_wage  # Wage amount, used for numerical calculations
+  - yr_of_estab  # Year of establishment, used for numerical calculations
+
+# List of categorical columns for categorical analysis and encoding
+categorical_columns:
+  - case_id  # Categorical identifier for cases
+  - continent  # Categorical data representing continents
+  - education_of_employee  # Categorical data on employee education levels
+  - has_job_experience  # Categorical data indicating job experience
+  - requires_job_training  # Categorical data indicating training requirements
+  - region_of_employment  # Categorical data for employment regions
+  - unit_of_wage  # Categorical data for wage units
+  - full_time_position  # Categorical data for full-time positions
+  - case_status  # Categorical data representing the status of the case
+
+# Columns to drop from the dataset for analysis
+drop_columns:
+  - case_id  # Dropped as it may not contribute to analysis
+  - yr_of_estab  # Dropped to focus on relevant features
+
+# For data transformation, defining numerical features for scaling or other transformations
+num_features:
+  - no_of_employees  # Numerical feature, included for transformations
+  - prevailing_wage  # Numerical feature, included for transformations
+  - company_age  # Derived feature indicating the age of the company, may need to be calculated
+
+# List of categorical columns to be encoded using ordinal encoding
+or_columns:
+  - has_job_experience  # Encoded as ordinal (e.g., Yes=1, No=0)
+  - requires_job_training  # Encoded as ordinal (e.g., Yes=1, No=0)
+  - full_time_position  # Encoded as ordinal (e.g., Yes=1, No=0)
+  - education_of_employee  # Encoded as ordinal based on education levels
+
+# List of categorical columns to be encoded using one-hot encoding
+oh_columns:
+  - continent  # One-hot encoded to represent each continent separately
+  - unit_of_wage  # One-hot encoded to represent each wage unit separately
+  - region_of_employment  # One-hot encoded to represent each region separately
+
+# Columns designated for transformation, such as scaling or normalization
+transform_columns:
+  - no_of_employees  # Numeric feature to be transformed
+  - company_age  # Numeric feature representing company age to be transformed

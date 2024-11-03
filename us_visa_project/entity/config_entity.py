@@ -46,3 +46,40 @@ class DataValidationConfig:
     # File path for the data drift report, which combines the data validation directory, report directory, and file name
     drift_report_file_path: str = os.path.join(data_validation_dir, DATA_VALIDATION_DRIFT_REPORT_DIR,
                                                DATA_VALIDATION_DRIFT_REPORT_FILE_NAME)
+
+
+# Define a configuration class for data transformation settings
+@dataclass
+class DataTransformationConfig:
+    # Directory for storing data transformation artifacts, set to a subdirectory within the main artifact directory
+    data_transformation_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME)
+    
+    # File path for the transformed training data, saved as a .npy (NumPy) file for efficiency
+    transformed_train_file_path: str = os.path.join(data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
+                                                    TRAIN_FILE_NAME.replace("csv", "npy"))
+    
+    # File path for the transformed testing data, also saved as a .npy file
+    transformed_test_file_path: str = os.path.join(data_transformation_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
+                                                   TEST_FILE_NAME.replace("csv", "npy"))
+    
+    # File path for the preprocessing object (e.g., scaler or encoder), used to apply consistent transformations
+    transformed_object_file_path: str = os.path.join(data_transformation_dir,
+                                                     DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
+                                                     PREPROCSSING_OBJECT_FILE_NAME)
+
+
+# Define a class to hold configuration settings for model training
+@dataclass
+class ModelTrainerConfig:
+    # Directory where the model training artifacts will be stored
+    model_trainer_dir: str = os.path.join(training_pipeline_config.artifact_dir, MODEL_TRAINER_DIR_NAME)
+    
+    # File path where the trained model will be saved
+    trained_model_file_path: str = os.path.join(model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME)
+    
+    # The minimum expected accuracy score for the model to be considered satisfactory
+    expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
+    
+    # File path for the model configuration file, which contains model-specific parameters for training
+    model_config_file_path: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
+

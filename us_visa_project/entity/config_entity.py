@@ -83,3 +83,28 @@ class ModelTrainerConfig:
     # File path for the model configuration file, which contains model-specific parameters for training
     model_config_file_path: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
 
+# Define a class to hold configuration settings for model evaluation
+@dataclass
+class ModelEvaluationConfig:
+    """
+    Configuration for evaluating a model, including thresholds and S3 bucket details.
+    """
+    changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE  # Threshold score for detecting significant model change
+    bucket_name: str = MODEL_BUCKET_NAME  # Name of the S3 bucket where the model is stored
+    s3_model_key_path: str = MODEL_FILE_NAME  # Path within the S3 bucket to the model file
+
+@dataclass
+class ModelPusherConfig:
+    """
+    Configuration for pushing a model to S3 storage.
+    """
+    bucket_name: str = MODEL_BUCKET_NAME  # Name of the S3 bucket where the model will be pushed
+    s3_model_key_path: str = MODEL_FILE_NAME  # Path within the S3 bucket for saving the model file
+
+@dataclass
+class USvisaPredictorConfig:
+    """
+    Configuration for the US visa prediction model, including file paths and S3 bucket details.
+    """
+    model_file_path: str = MODEL_FILE_NAME  # Local file path of the model used for prediction
+    model_bucket_name: str = MODEL_BUCKET_NAME  # Name of the S3 bucket containing the model for predictions

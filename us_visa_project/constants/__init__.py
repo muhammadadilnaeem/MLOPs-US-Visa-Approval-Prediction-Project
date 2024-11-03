@@ -32,7 +32,22 @@ TEST_FILE_NAME : str = "test.csv"
 MODEL_FILE_NAME = "model.pkl"
 
 
-# Constants related to data ingestion configuration
+# Name of the target column
+TARGET_COLUMN = "case_status"
+
+# Current year for calculating age
+CURRENT_YEAR = date.today().year
+
+# Name of the preprocessor file
+PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
+
+# Path to the schema file for validation
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+
+
+"""
+Data Ingestion related constant start with DATA_INGESTION VAR NAME
+"""
 
 # Name of the database collection where the visa data will be stored
 DATA_INGESTION_COLLECTION_NAME: str = "US_VISA_DATA"
@@ -49,3 +64,15 @@ DATA_INGESTION_INGESTED_DIR: str = "ingested"
 # Ratio for splitting the dataset into training and testing sets
 DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO: float = 0.2
 
+"""
+Data Validation realted contant start with DATA_VALIDATION VAR NAME
+"""
+
+# Directory name for data validation
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+
+# File name for drift report
+DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
+
+# File name that will be used for drift report
+DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
